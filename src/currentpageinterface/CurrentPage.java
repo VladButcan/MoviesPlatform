@@ -19,7 +19,6 @@ public interface CurrentPage {
                                    ArrayNode output) {
         return currentPage;
     }
-
     /**
      * Function for do something actions on page
      * @param currentPage current HomePage Autentificat / Neautentificat
