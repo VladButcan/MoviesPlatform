@@ -11,7 +11,7 @@ public final class Users implements Notify {
     private Credentials credentials = new Credentials();
 
     /**
-     * Function for notify all users
+     * Function for notify all users that they subscribed to some genre of new movie genres
      * @param notifications notification about delete or add movie
      */
     public void setNotify(final Notifications notifications, final Movies movie) {
