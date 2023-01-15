@@ -8,7 +8,7 @@ import json.Users.Users;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AddedMovie {
+public final class AddedMovie extends Movies {
     private String name;
     private String year;
     private Integer duration;
@@ -41,27 +41,12 @@ public final class AddedMovie {
                 return moviesList;
             }
         }
-        Movies newMovie = new Movies();
-        newMovie.setName(actionsNode.getAddedMovie().getName());
-        newMovie.setYear(actionsNode.getAddedMovie().getYear());
-        newMovie.setDuration(actionsNode.getAddedMovie().getDuration());
-        newMovie.setGenres(actionsNode.getAddedMovie().getGenres());
-        newMovie.setActors(actionsNode.getAddedMovie().getActors());
-        newMovie.setCountriesBanned(actionsNode.getAddedMovie().getCountriesBanned());
+        Movies newMovie = actionsNode.getAddedMovie();
         moviesList.add(newMovie);
         Notifications notifications = new Notifications();
         notifications.setMovieName(newMovie.getName());
         notifications.setMessage("ADD");
-        for (Users user: usersList) {
-            if (!newMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
-                for (String genre: newMovie.getGenres()) {
-                    if (user.getCredentials().getSubscribeGenres().contains(genre)) {
-                        user.getCredentials().setNotifications(notifications);
-                        break;
-                    }
-                }
-            }
-        }
+        new Users().setNotify(notifications, newMovie);
         return moviesList;
     }
 
