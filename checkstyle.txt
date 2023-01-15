@@ -1,0 +1,15 @@
+Starting audit...
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\checker\CheckStyleConstants.java:3:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\homepageautentificat\SeeDetailsPage\Notify.java:6:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\Actions\DeleteMovie.java:5:8: Unused import - jdk.dynalink.NamedOperation. [UnusedImports]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\Credentials\Notifications.java:9:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\Credentials\Notifications.java:9:27: Parameter notifications should be final. [FinalParameters]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\JsonOut.java:2:8: Unused import - json.Actions.Actions. [UnusedImports]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\JsonOut.java:4:8: Unused import - json.Users.Users. [UnusedImports]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\JsonOut.java:98:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\json\UserCredentials.java:6:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\Main.java:16:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\Recommendations.java:13:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] D:\POO\Proiect\update project 2\oop-asignments-master\proiect2\.\src\Test.java:9:28: Using the '.*' form of import should be avoided - java.util.concurrent.*. [AvoidStarImport]
+Audit done.
+Checkstyle ends with 12 errors.
