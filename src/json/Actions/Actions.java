@@ -44,6 +44,7 @@ public final class Actions {
     public CurrentPage changeCurrentPage(final CurrentPage currentPage, final Actions actionsNode,
                                          final List<Users> usersList, final List<Movies> moviesList,
                                          final ArrayNode output) {
+
         return currentPage.changePage(currentPage, actionsNode, usersList, moviesList, output);
     }
 
