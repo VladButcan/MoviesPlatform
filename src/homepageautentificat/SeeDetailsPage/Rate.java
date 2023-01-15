@@ -24,10 +24,12 @@ public final class Rate implements MovieActions {
         Movies movies = new Movies();
         for (Movies movie: moviesList) {
             if (movie.getName().equals(movies.showCurrentMovie().getName())) {
-                if (jsonOut.getUserWatchedMovies().contains(movie)) {
-                    if (!jsonOut.getUserRatedMovies().contains(movie)) {
+                if (jsonOut.getCurrentUser().getCredentials().getWatchedMovies().contains(movie)) {
+                    if (!jsonOut.getCurrentUser().getCredentials().getRatedMovies()
+                            .contains(movie)) {
                         usersList.forEach(user -> {
-                            if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
+                            if (user.getCredentials().getName()
+                                    .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
                                 user.getCredentials().setRatedMovies(movie);
                             }
 
@@ -37,15 +39,17 @@ public final class Rate implements MovieActions {
                     Double newRate = 0.0;
                     for (Map.Entry<String, Double> entry
                             : movie.showMovieRate().entrySet()) {
-                        if (jsonOut.getUserName().equals(entry.getKey())) {
-                            movie.changeRate(
-                                    jsonOut.getUserName(), actionsNode.getRate());
+                        if (jsonOut.getCurrentUser().getCredentials().getName()
+                                .equals(entry.getKey())) {
+                            movie.changeRate(jsonOut.getCurrentUser().getCredentials().getName(),
+                                    actionsNode.getRate());
                             changeRate = 1;
                         }
                     }
                     if (changeRate == 0) {
                         movie.setAllRates(
-                                jsonOut.getUserName(), actionsNode.getRate());
+                                jsonOut.getCurrentUser().getCredentials().getName(),
+                                actionsNode.getRate());
                         movie.setNumRatings(
                                 movie.getNumRatings() + 1);
                     }

@@ -3,14 +3,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import homepageautentificat.MoviesPage.Movies;
 import json.Credentials.Notifications;
 import json.JsonOut;
-import json.Users.Users;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Recommendations {
-    public boolean act(final List<Users> usersList, final List<Movies> moviesList,
+    /**
+     * Algorithm for create a recommendation for active premium user
+     * @param moviesList list of movies
+     * @param output output array node
+     */
+    public boolean act(final List<Movies> moviesList,
                        final ArrayNode output) {
         HashMap<String, Integer> genresHashMap = new HashMap<String, Integer>();
         List<String> genresList = new ArrayList<String>();
@@ -26,7 +30,8 @@ public final class Recommendations {
         for (String genre: genresList) {
             for (Movies movie: moviesList) {
                 if (movie.getGenres().contains(genre)) {
-                    if (jsonOut.getUserLikedMovies().contains(movie)) {
+                    if (jsonOut.getCurrentUser().getCredentials().getLikedMovies()
+                            .contains(movie)) {
                         genresHashMap.replace(genre, genresHashMap.get(genre) + 1);
                     }
                 }
@@ -43,11 +48,12 @@ public final class Recommendations {
         Notifications notifications = new Notifications();
         for (Movies movie: moviesList) {
             for (Map.Entry<String, Integer> entry: genresHashMap.entrySet()) {
-                if (!jsonOut.getUserWatchedMovies().contains(movie)) {
+                if (!jsonOut.getCurrentUser().getCredentials().getWatchedMovies()
+                        .contains(movie)) {
                     if (movie.getGenres().contains(entry.getKey())) {
                         notifications.setMessage("Recommendation");
                         notifications.setMovieName(movie.getName());
-                        jsonOut.setUserNotifications(notifications);
+                        jsonOut.getCurrentUser().getCredentials().setNotifications(notifications);
                         ObjectNode userNode = jsonOut.createUserNode();
                         jsonOut.recommendNode(output, userNode);
                         return true;
@@ -57,7 +63,7 @@ public final class Recommendations {
         }
         notifications.setMessage("Recommendation");
         notifications.setMovieName("No recommendation");
-        jsonOut.setUserNotifications(notifications);
+        jsonOut.getCurrentUser().getCredentials().setNotifications(notifications);
         ObjectNode userNode = jsonOut.createUserNode();
         jsonOut.recommendNode(output, userNode);
         return false;

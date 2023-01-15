@@ -21,11 +21,14 @@ public final class BuyAccount implements BuyAction {
                     final List<Users> usersList, final List<Movies> moviesList,
                     final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
-        jsonOut.setUserTokensCount(jsonOut.getUserTokensCount() - priceForPremiumAccount);
-        jsonOut.setUserAccountType("premium");
+        jsonOut.getCurrentUser().getCredentials().setTokensCount(
+            jsonOut.getCurrentUser().getCredentials().getTokensCount() - priceForPremiumAccount);
+        jsonOut.getCurrentUser().getCredentials().setAccountType("premium");
         usersList.forEach(user -> {
-            if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
-                user.getCredentials().setTokensCount(jsonOut.getUserTokensCount());
+            if (user.getCredentials().getName()
+                    .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
+                user.getCredentials().setTokensCount(
+                    jsonOut.getCurrentUser().getCredentials().getTokensCount());
                 user.getCredentials().setAccountType("premium");
             }
         });

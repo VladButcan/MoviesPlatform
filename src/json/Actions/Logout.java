@@ -16,6 +16,6 @@ public final class Logout {
         ArrayList<CurrentPage> historyAccessPage = new ArrayList<CurrentPage>();
         historyAccessPage.add(new HomePageNeautentificat());
         back.resetHistoryAccessPage(historyAccessPage);
-        jsonOut.setUserName("No user");
+        jsonOut.setActiveUser("No user");
     }
 }

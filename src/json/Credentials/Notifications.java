@@ -6,7 +6,11 @@ public final class Notifications implements Notify {
     private String movieName;
     private String message;
 
-    public void setNotify(Notifications notifications) {
+    /**
+     * Function for set notify
+     * @param notifications notification about delete or add movie
+     */
+    public void setNotify(final Notifications notifications) {
         movieName = notifications.getMovieName();
         message = notifications.getMessage();
     }

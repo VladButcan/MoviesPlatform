@@ -86,7 +86,8 @@ public final class SeeDetailsPage implements CurrentPage {
         Movies movies = new Movies();
         for (Movies movie: moviesList) {
             if (movie.getName().equals(actionsNode.getMovie())) {
-                if (movie.getCountriesBanned().contains(jsonOut.getUserCountry())) {
+                if (movie.getCountriesBanned().contains(
+                        jsonOut.getCurrentUser().getCredentials().getCountry())) {
                     jsonOut.errorNode(output);
                     return new MoviesPage();
                 } else {

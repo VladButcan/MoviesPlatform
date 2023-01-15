@@ -1,8 +1,7 @@
 package json.Users;
 import json.Credentials.Credentials;
-import json.UserCredentials;
 
-public final class Users implements UserCredentials {
+public final class Users {
     private Credentials credentials = new Credentials();
     public Credentials getCredentials() {
         return credentials;

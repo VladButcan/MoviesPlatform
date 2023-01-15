@@ -29,7 +29,9 @@ public final class LoginPage implements CurrentPage {
             if (user.getCredentials().getName().equals(actionsNode.getCredentials().getName())) {
                 if (user.getCredentials().getPassword()
                         .equals(actionsNode.getCredentials().getPassword())) {
-                    jsonOut.createUser(user);
+                    jsonOut.setCurrentUser(user);
+                    jsonOut.setActiveUser(user.getCredentials().getName());
+
                     ObjectNode userNode = jsonOut.createUserNode();
                     jsonOut.createNode(output, userNode);
                     FilterMovies filterMovies = new FilterMovies();

@@ -31,6 +31,8 @@ public class Main {
         Back back = new Back();
         back.resetHistoryAccessPage(new ArrayList<CurrentPage>());
         back.setHistoryAccessPage(currentPage);
+
+        JsonOut jsonOut = new JsonOut();
         for (Actions actions: json.getActions()) {
             switch (actions.getType()) {
                 case "change page":
@@ -75,12 +77,14 @@ public class Main {
                     break;
             }
         }
-        JsonOut jsonOut = new JsonOut();
-        if (!jsonOut.getUserName().equals("No user")) {
-            if (jsonOut.getUserAccountType().equals("premium")) {
+        jsonOut = new JsonOut();
+        if (!jsonOut.getActiveUser().equals("No user")) {
+            if (jsonOut.getCurrentUser().getCredentials().getAccountType().equals("premium")) {
                 Recommendations recommendations = new Recommendations();
-                recommendations.act(json.getUsers(), json.getMovies(), output);
+                recommendations.act(json.getMovies(), output);
             }
+        } else {
+
         }
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(args[1]), output);

@@ -13,17 +13,21 @@ public final class BuyTokens implements BuyAction {
                     final List<Users> usersList, final List<Movies> moviesList,
                     final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
-        if (Integer.parseInt(jsonOut.getUserBalance())
+        if (Integer.parseInt(jsonOut.getCurrentUser().getCredentials().getBalance())
                 >= Integer.parseInt(actionsNode.getCount())) {
-            jsonOut.setUserBalance(Integer.toString(
-                    Integer.parseInt(jsonOut.getUserBalance())
+            jsonOut.getCurrentUser().getCredentials().setBalance(Integer.toString(
+                    Integer.parseInt(jsonOut.getCurrentUser().getCredentials().getBalance())
                             - Integer.parseInt(actionsNode.getCount())));
-            jsonOut.setUserTokensCount(
-                    Integer.parseInt(actionsNode.getCount()) + jsonOut.getUserTokensCount());
+            jsonOut.getCurrentUser().getCredentials().setTokensCount(
+                    Integer.parseInt(actionsNode.getCount())
+                            + jsonOut.getCurrentUser().getCredentials().getTokensCount());
             usersList.forEach(user -> {
-                if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
-                    user.getCredentials().setBalance(jsonOut.getUserBalance());
-                    user.getCredentials().setTokensCount(jsonOut.getUserTokensCount());
+                if (user.getCredentials().getName()
+                        .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
+                    user.getCredentials().setBalance(
+                        jsonOut.getCurrentUser().getCredentials().getBalance());
+                    user.getCredentials().setTokensCount(
+                        jsonOut.getCurrentUser().getCredentials().getTokensCount());
                 }
             });
         }

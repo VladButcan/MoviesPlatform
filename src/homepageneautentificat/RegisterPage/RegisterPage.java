@@ -37,8 +37,9 @@ public final class RegisterPage implements CurrentPage {
         Users newUser = new Users();
         newUser.setCredentials(actionsNode.getCredentials());
         usersList.add(newUser);
+        jsonOut.setCurrentUser(newUser);
+        jsonOut.setActiveUser(newUser.getCredentials().getName());
 
-        jsonOut.createUser(actionsNode);
         ObjectNode userNode  = jsonOut.createUserNode();
         jsonOut.createNode(output, userNode);
 

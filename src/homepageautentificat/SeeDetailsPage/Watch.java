@@ -24,10 +24,13 @@ public final class Watch implements MovieActions {
         JsonOut jsonOut = new JsonOut();
         Movies movies = new Movies();
         if (moviesList.contains(movies.showCurrentMovie())) {
-            if (jsonOut.getUserPurchasedMovies().contains(movies.showCurrentMovie())) {
-                if (!jsonOut.getUserWatchedMovies().contains(movies.showCurrentMovie())) {
+            if (jsonOut.getCurrentUser().getCredentials().getPurchasedMovies()
+                    .contains(movies.showCurrentMovie())) {
+                if (!jsonOut.getCurrentUser().getCredentials().getWatchedMovies()
+                        .contains(movies.showCurrentMovie())) {
                     usersList.forEach(user -> {
-                        if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
+                        if (user.getCredentials().getName()
+                                .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
                             user.getCredentials().setWatchedMovies(movies.showCurrentMovie());
                         }
                     });

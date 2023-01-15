@@ -15,11 +15,12 @@ public final class Like implements MovieActions {
                        final List<Users> usersList, final List<Movies> moviesList,
                        final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
-        for (Movies movie: jsonOut.getUserWatchedMovies()) {
+        for (Movies movie: jsonOut.getCurrentUser().getCredentials().getWatchedMovies()) {
             if (movie.getName().equals(movie.showCurrentMovie().getName())) {
-                if (!jsonOut.getUserLikedMovies().contains(movie)) {
+                if (!jsonOut.getCurrentUser().getCredentials().getLikedMovies().contains(movie)) {
                     usersList.forEach(user -> {
-                        if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
+                        if (user.getCredentials().getName().equals(
+                                jsonOut.getCurrentUser().getCredentials().getName())) {
                             user.getCredentials().setLikedMovies(movie);
                         }
                     });

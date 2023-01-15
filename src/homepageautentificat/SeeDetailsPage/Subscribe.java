@@ -22,7 +22,8 @@ public final class Subscribe {
         if (movies.showCurrentMovie().getGenres().contains(
                 actionsNode.getSubscribedGenre())) {
             for (Users user : usersList) {
-                if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
+                if (user.getCredentials().getName()
+                        .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
                     if (user.getCredentials().getSubscribeGenres().contains(
                             actionsNode.getSubscribedGenre())) {
                         jsonOut.errorNode(output);

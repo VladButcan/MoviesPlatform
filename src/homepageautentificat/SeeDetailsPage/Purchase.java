@@ -24,10 +24,12 @@ public final class Purchase implements MovieActions {
         Movies movies = new Movies();
         if (moviesList.contains(movies.showCurrentMovie())) {
             if (!movies.showCurrentMovie()
-                    .getCountriesBanned().contains(jsonOut.getUserCountry())) {
-                if (!jsonOut.getUserPurchasedMovies().contains(movies.showCurrentMovie())) {
+                    .getCountriesBanned().contains(
+                            jsonOut.getCurrentUser().getCredentials().getCountry())) {
+                if (!jsonOut.getCurrentUser().getCredentials().getPurchasedMovies().contains(
+                                                                    movies.showCurrentMovie())) {
                     AccountType accountType = null;
-                    switch (jsonOut.getUserAccountType()) {
+                    switch (jsonOut.getCurrentUser().getCredentials().getAccountType()) {
                         case "premium":
                             accountType = new PremiumAccount();
                             break;

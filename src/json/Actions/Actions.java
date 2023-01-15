@@ -2,13 +2,12 @@ package json.Actions;
 import json.Credentials.Credentials;
 import homepageautentificat.MoviesPage.Movies;
 import homepageautentificat.MoviesPage.Filters;
-import json.UserCredentials;
 import json.Users.Users;
 import currentpageinterface.CurrentPage;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.List;
 
-public final class Actions implements UserCredentials {
+public final class Actions {
     private String type;
     private String page;
     private String feature;

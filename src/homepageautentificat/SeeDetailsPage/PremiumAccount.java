@@ -13,16 +13,19 @@ public final class PremiumAccount implements AccountType {
                          final Movies currentMovie, final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
         for (Users user: usersList) {
-            if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
-                if (jsonOut.getUserNumFreePremiumMovies() > 0) {
-                    jsonOut.setUserNumFreePremiumMovies(
-                            jsonOut.getUserNumFreePremiumMovies() - 1);
+            if (user.getCredentials().getName().equals(
+                    jsonOut.getCurrentUser().getCredentials().getName())) {
+                if (jsonOut.getCurrentUser().getCredentials().getNumFreePremiumMovies() > 0) {
+                    jsonOut.getCurrentUser().getCredentials().setNumFreePremiumMovies(
+                    jsonOut.getCurrentUser().getCredentials().getNumFreePremiumMovies() - 1);
                     user.getCredentials().setNumFreePremiumMovies(
-                            jsonOut.getUserNumFreePremiumMovies());
+                            jsonOut.getCurrentUser().getCredentials().getNumFreePremiumMovies());
                 } else {
                     if (user.getCredentials().getTokensCount() > 1) {
-                        jsonOut.setUserTokensCount(jsonOut.getUserTokensCount() - 2);
-                        user.getCredentials().setTokensCount(jsonOut.getUserTokensCount());
+                        jsonOut.getCurrentUser().getCredentials().setTokensCount(
+                                jsonOut.getCurrentUser().getCredentials().getTokensCount() - 2);
+                        user.getCredentials().setTokensCount(
+                                jsonOut.getCurrentUser().getCredentials().getTokensCount());
                     } else {
                         jsonOut.errorNode(output);
                         return false;

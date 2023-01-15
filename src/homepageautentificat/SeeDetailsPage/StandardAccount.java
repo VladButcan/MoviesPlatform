@@ -15,11 +15,14 @@ public final class StandardAccount implements AccountType {
         JsonOut jsonOut = new JsonOut();
 
         for (Users user: usersList) {
-            if (user.getCredentials().getName().equals(jsonOut.getUserName())) {
+            if (user.getCredentials().getName()
+                    .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
 
                 if (user.getCredentials().getTokensCount() > 1) {
-                    jsonOut.setUserTokensCount(jsonOut.getUserTokensCount() - 2);
-                    user.getCredentials().setTokensCount(jsonOut.getUserTokensCount());
+                    jsonOut.getCurrentUser().getCredentials().setTokensCount(
+                            jsonOut.getCurrentUser().getCredentials().getTokensCount() - 2);
+                    user.getCredentials().setTokensCount(
+                            jsonOut.getCurrentUser().getCredentials().getTokensCount());
                 } else {
                     jsonOut.errorNode(output);
                     return false;
