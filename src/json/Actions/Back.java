@@ -18,9 +18,9 @@ public final class Back implements CurrentPage {
     public ArrayList<CurrentPage> act(final ArrayList<CurrentPage> historyAccessPages,
                                       final ArrayNode output) {
         if (historyAccessPages.get(historyAccessPages.size() - 1)
-                .getClass().getName().equals(new HomePageNeautentificat().getClass().getName())
+                .getClass().getName().equals(HomePageNeautentificat.class.getName())
                 || historyAccessPages.get(historyAccessPages.size() - 1)
-                .getClass().getName().equals(new HomePageAutentificat().getClass().getName())) {
+                .getClass().getName().equals(HomePageAutentificat.class.getName())) {
             JsonOut jsonOut = new JsonOut();
             jsonOut.errorNode(output);
             return  historyAccessPages;
