@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class Movies {
+public class Movies {
     private static Movies currentMovie;
     private String name;
     private String year;
@@ -27,70 +27,130 @@ public final class Movies {
         rating = 0.00;
         numRatings = 0;
     }
+
+    /**
+     * Function for return name of movie
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Function for set name for movie
+     * @param name set new movie name
+     */
     public void setName(final String name) {
         this.name = name;
     }
 
+    /**
+     * Function for return year of movies
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * Function for set year for movies
+     * @param year new year for movie
+     */
     public void setYear(final String year) {
         this.year = year;
     }
 
+    /**
+     * Function for return duration of movie
+     */
     public Integer getDuration() {
         return duration;
     }
 
+    /**
+     * Function for set duration for movie
+     * @param duration new movie duration
+     */
     public void setDuration(final Integer duration) {
         this.duration = duration;
     }
 
+    /**
+     * Function for return
+     */
     public List<String> getGenres() {
         return genres;
     }
 
+    /**
+     * Function for set list of genres for movie
+     * @param genres new list of genres
+     */
     public void setGenres(final List<String> genres) {
         this.genres = genres;
     }
 
+    /**
+     * Function for return list of movie actors
+     */
     public List<String> getActors() {
         return actors;
     }
 
+    /**
+     * Function for set list of movie actors
+     * @param actors new list of movie actors
+     */
     public void setActors(final List<String> actors) {
         this.actors = actors;
     }
 
+    /**
+     * Function for return list of movie countries banned
+     */
     public List<String> getCountriesBanned() {
         return countriesBanned;
     }
 
+    /**
+     * Function for set list of movie countries banned
+     * @param countriesBanned new list of countries banned
+     */
     public void setCountriesBanned(final List<String> countriesBanned) {
         this.countriesBanned = countriesBanned;
     }
 
+    /**
+     * Function for return number of movie likes
+     */
     public Integer getNumLikes() {
         return numLikes;
     }
 
+    /**
+     * Function for set number of movie likes
+     * @param numLikes new number of movie likes
+     */
     public void setNumLikes(final Integer numLikes) {
         this.numLikes = numLikes;
     }
 
+    /**
+     * Function for return movie rating
+     */
     public Double getRating() {
         return rating;
     }
 
+    /**
+     * Function for set movie rating
+     * @param rating new movie rating
+     */
     public void setRating(final Double rating) {
         this.rating = rating;
     }
 
+    /**
+     * Function for return number of movie rating
+     */
     public Integer getNumRatings() {
         return numRatings;
     }
