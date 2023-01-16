@@ -1,7 +1,6 @@
-package json.Actions;
+package json.Credentials;
 
 import homepageautentificat.MoviesPage.Movies;
-import json.Credentials.Notifications;
 
 public interface Notify {
     /**
