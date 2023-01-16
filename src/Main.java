@@ -1,6 +1,7 @@
-import json.Actions.*;
+import json.Actions.Actions;
 import homepageneautentificat.HomePageNeautentificat;
 import currentpageinterface.CurrentPage;
+import json.Actions.actionsType.TypeOfActions;
 import json.Json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import json.JsonOut;
+import json.Actions.actionsType.Back;
+import json.Actions.actionsType.ActionsType;
 
 public class Main {
     /**
