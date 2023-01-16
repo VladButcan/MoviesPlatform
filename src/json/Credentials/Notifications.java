@@ -1,7 +1,7 @@
 package json.Credentials;
 
 import homepageautentificat.MoviesPage.Movies;
-import homepageautentificat.SeeDetailsPage.Notify;
+import json.Actions.Notify;
 
 public final class Notifications implements Notify {
     private String movieName;
