@@ -3,13 +3,28 @@ package json.Actions;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import currentpageinterface.CurrentPage;
 import homepageautentificat.HomePageAutentificat;
+import homepageautentificat.MoviesPage.Movies;
 import homepageneautentificat.HomePageNeautentificat;
 import json.JsonOut;
+import json.Users.Users;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public final class Back implements CurrentPage {
+public final class Back implements TypeOfActions {
     private static ArrayList<CurrentPage> historyAccessPage;
+    @Override
+    public CurrentPage act(CurrentPage currentPage,
+                           final List<Users> usersList, final Actions actions,
+                           final List<Movies> moviesList, final ArrayNode output) {
+        Back back = new Back();
 
+        back.resetHistoryAccessPage(back.act(back.getHistoryAccessPage(), output));
+        currentPage = back.getHistoryAccessPage().get(back.getHistoryAccessPage().size() - 1);
+        actions.goBack(currentPage, moviesList, output);
+
+        return currentPage;
+    }
     /**
      * Function for act the back action and change array list for pages history
      * @param historyAccessPages Array list of Current Page from save the all accessed pages
