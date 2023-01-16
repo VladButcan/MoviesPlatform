@@ -1,4 +1,4 @@
-package homepageautentificat.SeeDetailsPage;
+package json.Actions;
 
 import homepageautentificat.MoviesPage.Movies;
 import json.Credentials.Notifications;
