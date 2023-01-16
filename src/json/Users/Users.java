@@ -1,6 +1,6 @@
 package json.Users;
 import homepageautentificat.MoviesPage.Movies;
-import homepageautentificat.SeeDetailsPage.Notify;
+import json.Actions.Notify;
 import json.Credentials.Credentials;
 import json.Credentials.Notifications;
 import json.Json;
