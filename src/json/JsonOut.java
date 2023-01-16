@@ -20,54 +20,88 @@ public final class JsonOut {
     private ObjectNode user;
     private static String activeUser = "No user";
     private static HashMap<String, ArrayList<Integer>> allRatings = new HashMap<>();
-    /**
-     * Function for create a error node in json output node
-     * @param output output file
-     */
-    public void errorNode(final ArrayNode output) {
-        user = mapper.createObjectNode();
-        user.put("error", "Error");
-        user.set("currentMoviesList", mapper.valueToTree(new ArrayList<>()));
-        user.set("currentUser", mapper.valueToTree(null));
-        output.add(user);
+    private String error;
+    private ArrayNode moviesNode;
+    private ObjectNode userNode;
+    public static final class Builder {
+        private String error;
+        private ArrayNode moviesNode;
+        private ObjectNode userNode;
+        public Builder() {
+            this.error = "Error";
+        }
+
+        /**
+         * Basic constructor
+         * @param error set error value
+         */
+        public Builder error(final String error) {
+            this.error = error;
+            return this;
+        }
+
+        /**
+         * Add movies output node
+         * @param moviesNode node of movies for output
+         */
+        public Builder moviesNode(final ArrayNode moviesNode) {
+            this.moviesNode = moviesNode;
+            return this;
+        }
+
+        /**
+         * Add current user output node
+         * @param userNode nod of user for output
+         */
+        public Builder userNode(final ObjectNode userNode) {
+            this.userNode = userNode;
+            return this;
+        }
+
+        /**
+         * Function for build output node
+         */
+        public JsonOut build() {
+            return new JsonOut(this);
+        }
+        public String getError() {
+            return error;
+        }
+        public void setError(final String error) {
+            this.error = error;
+        }
+        public ArrayNode getMoviesNode() {
+            return moviesNode;
+        }
+        public void setMoviesNode(final ArrayNode moviesNode) {
+            this.moviesNode = moviesNode;
+        }
+
+        public ObjectNode getUserNode() {
+            return userNode;
+        }
+
+        public void setUserNode(final ObjectNode userNode) {
+            this.userNode = userNode;
+        }
     }
-    /**
-     * Function for create a node without error, with current movie list and current user
-     * @param output output Array Node
-     * @param moviesNode Array Node of movies
-     * @param userNode Array Node of users
-     */
-    public void createNode(final ArrayNode output, final ArrayNode moviesNode,
-                           final ObjectNode userNode) {
-        user = mapper.createObjectNode();
-        user.set("error", mapper.valueToTree(null));
-        user.set("currentMoviesList", moviesNode);
-        user.set("currentUser", userNode);
-        output.add(user);
+    private JsonOut(final Builder builder) {
+        this.userNode = builder.userNode;
+        this.error = builder.error;
+        this.moviesNode = builder.moviesNode;
     }
-    /**
-     * Function for create a node without error and with current user
-     * @param output output Array Node
-     * @param userNode Array Node of users
-     */
-    public void createNode(final ArrayNode output, final ObjectNode userNode) {
-        user = mapper.createObjectNode();
-        user.set("error", mapper.valueToTree(null));
-        user.set("currentMoviesList", mapper.valueToTree(new ArrayList<>()));
-        user.set("currentUser", userNode);
-        output.add(user);
+    public JsonOut() {
     }
 
     /**
-     * Function for create a recommendation node
-     * @param output output array node
-     * @param userNode output user array node
+     * Create general output array node with builder
+     * @param output array node for output file
      */
-    public void recommendNode(final ArrayNode output, final ObjectNode userNode) {
+    public void createOutputNode(final ArrayNode output) {
         user = mapper.createObjectNode();
-        user.set("error", mapper.valueToTree(null));
-        user.set("currentMoviesList", mapper.valueToTree(null));
-        user.set("currentUser", userNode);
+        user.set("error", mapper.valueToTree(error));
+        user.set("currentMoviesList", mapper.valueToTree(moviesNode));
+        user.set("currentUser", mapper.valueToTree(userNode));
         output.add(user);
     }
     /**
@@ -124,6 +158,31 @@ public final class JsonOut {
         moviesArrayList.add(movie);
         return moviesList(moviesArrayList);
     }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(final String error) {
+        this.error = error;
+    }
+
+    public ArrayNode getMoviesNode() {
+        return moviesNode;
+    }
+
+    public void setMoviesNode(final ArrayNode moviesNode) {
+        this.moviesNode = moviesNode;
+    }
+
+    public ObjectNode getUserNode() {
+        return userNode;
+    }
+
+    public void setUserNode(final ObjectNode userNode) {
+        this.userNode = userNode;
+    }
+
     public ObjectMapper getMapper() {
         return mapper;
     }
