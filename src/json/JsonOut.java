@@ -33,28 +33,28 @@ public final class JsonOut {
 
         /**
          * Basic constructor
-         * @param error set error value
+         * @param errorSet set error value
          */
-        public Builder error(final String error) {
-            this.error = error;
+        public Builder error(final String errorSet) {
+            this.error = errorSet;
             return this;
         }
 
         /**
          * Add movies output node
-         * @param moviesNode node of movies for output
+         * @param moviesNodeSet node of movies for output
          */
-        public Builder moviesNode(final ArrayNode moviesNode) {
-            this.moviesNode = moviesNode;
+        public Builder moviesNode(final ArrayNode moviesNodeSet) {
+            this.moviesNode = moviesNodeSet;
             return this;
         }
 
         /**
          * Add current user output node
-         * @param userNode nod of user for output
+         * @param userNodeSet nod of user for output
          */
-        public Builder userNode(final ObjectNode userNode) {
-            this.userNode = userNode;
+        public Builder userNode(final ObjectNode userNodeSet) {
+            this.userNode = userNodeSet;
             return this;
         }
 
@@ -108,28 +108,29 @@ public final class JsonOut {
      * Function for create a user node with current user credentials
      */
     public ObjectNode createUserNode() {
-        ObjectNode currentUser = mapper.createObjectNode();
+        ObjectNode currentUserNode = mapper.createObjectNode();
         ObjectNode credentials = mapper.createObjectNode();
         credentials.put("name", this.getCurrentUser().getCredentials().getName());
         credentials.put("password", this.getCurrentUser().getCredentials().getPassword());
         credentials.put("accountType", this.getCurrentUser().getCredentials().getAccountType());
         credentials.put("country", this.getCurrentUser().getCredentials().getCountry());
         credentials.put("balance", this.getCurrentUser().getCredentials().getBalance());
-        currentUser.set("credentials", mapper.valueToTree(credentials));
-        currentUser.put("tokensCount", this.getCurrentUser().getCredentials().getTokensCount());
-        currentUser.put("numFreePremiumMovies",
+        currentUserNode.set("credentials", mapper.valueToTree(credentials));
+        currentUserNode.put("tokensCount",
+                this.getCurrentUser().getCredentials().getTokensCount());
+        currentUserNode.put("numFreePremiumMovies",
                 this.getCurrentUser().getCredentials().getNumFreePremiumMovies());
-        currentUser.set("purchasedMovies",
+        currentUserNode.set("purchasedMovies",
                 mapper.valueToTree(this.getCurrentUser().getCredentials().getPurchasedMovies()));
-        currentUser.set("watchedMovies",
+        currentUserNode.set("watchedMovies",
                 mapper.valueToTree(this.getCurrentUser().getCredentials().getWatchedMovies()));
-        currentUser.set("likedMovies",
+        currentUserNode.set("likedMovies",
                 mapper.valueToTree(this.getCurrentUser().getCredentials().getLikedMovies()));
-        currentUser.set("ratedMovies",
+        currentUserNode.set("ratedMovies",
                 mapper.valueToTree(this.getCurrentUser().getCredentials().getRatedMovies()));
-        currentUser.set("notifications",
+        currentUserNode.set("notifications",
                 mapper.valueToTree(this.getCurrentUser().getCredentials().getNotifications()));
-        return currentUser;
+        return currentUserNode;
     }
 
     /**
