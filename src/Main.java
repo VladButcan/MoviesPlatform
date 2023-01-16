@@ -36,7 +36,8 @@ public class Main {
 
         for (Actions actions: json.getActions()) {
             typeOfActions = actionsType.returnType(actions);
-            currentPage = typeOfActions.act(currentPage, json.getUsers(), actions, json.getMovies(), output);
+            currentPage = typeOfActions
+                    .act(currentPage, json.getUsers(), actions, json.getMovies(), output);
         }
         /**
          * Recommend the best movie for user if they are premium
