@@ -3,6 +3,7 @@ package json.Actions;
 import currentpageinterface.CurrentPage;
 import homepageneautentificat.HomePageNeautentificat;
 import json.JsonOut;
+import json.Actions.actionsType.Back;
 
 import java.util.ArrayList;
 
