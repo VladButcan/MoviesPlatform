@@ -51,5 +51,7 @@ public class Main {
                 recommendations.act(json.getMovies(), output);
             }
         }
+        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(new File(args[1]), output);
     }
 }
