@@ -18,7 +18,7 @@ public final class JsonOut {
     }
     private ObjectMapper mapper = new ObjectMapper();
     private ObjectNode user;
-    private static String activeUser;
+    private static String activeUser = "No user";
     private static HashMap<String, ArrayList<Integer>> allRatings = new HashMap<>();
     /**
      * Function for create a error node in json output node
