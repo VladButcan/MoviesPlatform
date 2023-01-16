@@ -1,9 +1,4 @@
-import json.Actions.Actions;
-import json.Actions.Back;
-import json.Actions.TypeOfActions;
-import json.Actions.ChangePage;
-import json.Actions.OnPage;
-import json.Actions.Database;
+package json.Actions;
 
 public final class ActionsType {
     public TypeOfActions returnType(final Actions actions) {
