@@ -6,6 +6,8 @@ import json.Users.Users;
 import homepageautentificat.MoviesPage.MovieActions;
 import homepageautentificat.MoviesPage.Movies;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Purchase implements MovieActions {
@@ -45,7 +47,11 @@ public final class Purchase implements MovieActions {
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

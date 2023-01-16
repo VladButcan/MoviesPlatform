@@ -6,7 +6,8 @@ import json.Users.Users;
 import homepageautentificat.MoviesPage.Movies;
 import homepageautentificat.MoviesPage.MovieActions;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Like implements MovieActions {
@@ -18,21 +19,29 @@ public final class Like implements MovieActions {
         for (Movies movie: jsonOut.getCurrentUser().getCredentials().getWatchedMovies()) {
             if (movie.getName().equals(movie.showCurrentMovie().getName())) {
                 if (!jsonOut.getCurrentUser().getCredentials().getLikedMovies().contains(movie)) {
+                    JsonOut finalJsonOut = jsonOut;
                     usersList.forEach(user -> {
                         if (user.getCredentials().getName().equals(
-                                jsonOut.getCurrentUser().getCredentials().getName())) {
+                                finalJsonOut.getCurrentUser().getCredentials().getName())) {
                             user.getCredentials().setLikedMovies(movie);
                         }
                     });
                     movie.setNumLikes(movie.getNumLikes() + 1);
-                    ObjectNode userNode = jsonOut.createUserNode();
-                    ArrayNode moviesNode = jsonOut.createMovieNode(movie);
-                    jsonOut.createNode(output, moviesNode, userNode);
+                    jsonOut = new JsonOut.Builder()
+                            .error(null)
+                            .moviesNode(jsonOut.createMovieNode(movie))
+                            .userNode(jsonOut.createUserNode())
+                            .build();
+                    jsonOut.createOutputNode(output);
                     return true;
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

@@ -6,6 +6,7 @@ import json.Actions.Actions;
 import json.JsonOut;
 import json.Users.Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Subscribe {
@@ -26,7 +27,11 @@ public final class Subscribe {
                         .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
                     if (user.getCredentials().getSubscribeGenres().contains(
                             actionsNode.getSubscribedGenre())) {
-                        jsonOut.errorNode(output);
+                        jsonOut = new JsonOut.Builder()
+                                .error("Error")
+                                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                                .userNode(null).build();
+                        jsonOut.createOutputNode(output);
                         return false;
                     }
                     user.getCredentials().setSubscribeGenres(actionsNode.getSubscribedGenre());
@@ -34,7 +39,11 @@ public final class Subscribe {
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

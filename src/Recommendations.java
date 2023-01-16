@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import homepageautentificat.MoviesPage.Movies;
 import json.Credentials.Notifications;
 import json.JsonOut;
@@ -54,8 +53,12 @@ public final class Recommendations {
                         notifications.setMessage("Recommendation");
                         notifications.setMovieName(movie.getName());
                         jsonOut.getCurrentUser().getCredentials().setNotifications(notifications);
-                        ObjectNode userNode = jsonOut.createUserNode();
-                        jsonOut.recommendNode(output, userNode);
+                        jsonOut = new JsonOut.Builder()
+                                .error(null)
+                                .moviesNode(null)
+                                .userNode(jsonOut.createUserNode())
+                                .build();
+                        jsonOut.createOutputNode(output);
                         return true;
                     }
                 }
@@ -64,8 +67,12 @@ public final class Recommendations {
         notifications.setMessage("Recommendation");
         notifications.setMovieName("No recommendation");
         jsonOut.getCurrentUser().getCredentials().setNotifications(notifications);
-        ObjectNode userNode = jsonOut.createUserNode();
-        jsonOut.recommendNode(output, userNode);
+        jsonOut = new JsonOut.Builder()
+                .error(null)
+                .moviesNode(null)
+                .userNode(jsonOut.createUserNode())
+                .build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import currentpageinterface.CurrentPage;
 import homepageautentificat.MoviesPage.Movies;
 import json.Actions.Actions;
-import json.Actions.actionsType.TypeOfActions;
 import json.Users.Users;
 
 import java.util.List;

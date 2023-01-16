@@ -37,7 +37,11 @@ public final class AddedMovie extends Movies {
         JsonOut jsonOut = new JsonOut();
         for (Movies movie: moviesList) {
             if (movie.getName().equals(actionsNode.getAddedMovie().getName())) {
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return moviesList;
             }
         }

@@ -3,7 +3,7 @@ import json.Actions.Actions;
 import json.Users.Users;
 import json.JsonOut;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +25,12 @@ public final class FilterMovies implements Feature {
             filterMoviesList = contains.act(actionsNode, filterMoviesList, output);
         }
         JsonOut jsonOut = new JsonOut();
-        ObjectNode userNode = jsonOut.createUserNode();
-        ArrayNode moviesNode = jsonOut.moviesList(filterMoviesList);
-        jsonOut.createNode(output, moviesNode, userNode);
+        jsonOut = new JsonOut.Builder()
+                .error(null)
+                .moviesNode(jsonOut.moviesList(filterMoviesList))
+                .userNode(jsonOut.createUserNode())
+                .build();
+        jsonOut.createOutputNode(output);
         currentMoviesList = filterMoviesList;
     }
 

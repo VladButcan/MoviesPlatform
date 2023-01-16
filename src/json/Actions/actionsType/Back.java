@@ -38,7 +38,11 @@ public final class Back implements TypeOfActions {
                 || historyAccessPages.get(historyAccessPages.size() - 1)
                 .getClass().getName().equals(HomePageAutentificat.class.getName())) {
             JsonOut jsonOut = new JsonOut();
-            jsonOut.errorNode(output);
+            jsonOut = new JsonOut.Builder()
+                    .error("Error")
+                    .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                    .userNode(null).build();
+            jsonOut.createOutputNode(output);
             return  historyAccessPages;
         }
         historyAccessPages.remove(historyAccessPages.size() - 1);

@@ -6,6 +6,7 @@ import json.Credentials.Notifications;
 import json.JsonOut;
 import json.Users.Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class DeleteMovie {
@@ -43,7 +44,11 @@ public final class DeleteMovie {
             }
         }
         JsonOut jsonOut = new JsonOut();
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return moviesList;
     }
 }

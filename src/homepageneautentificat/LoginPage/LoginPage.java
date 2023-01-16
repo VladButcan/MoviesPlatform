@@ -8,7 +8,8 @@ import json.Users.Users;
 import homepageautentificat.MoviesPage.Movies;
 import homepageautentificat.MoviesPage.FilterMovies;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class LoginPage implements CurrentPage {
@@ -32,15 +33,24 @@ public final class LoginPage implements CurrentPage {
                     jsonOut.setCurrentUser(user);
                     jsonOut.setActiveUser(user.getCredentials().getName());
 
-                    ObjectNode userNode = jsonOut.createUserNode();
-                    jsonOut.createNode(output, userNode);
+                    jsonOut = new JsonOut.Builder()
+                            .error(null)
+                            .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                            .userNode(jsonOut.createUserNode())
+                            .build();
+                    jsonOut.createOutputNode(output);
+
                     FilterMovies filterMovies = new FilterMovies();
                     filterMovies.setCurrentMoviesList(moviesList);
                     return new HomePageAutentificat();
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return new HomePageNeautentificat();
     }
 }

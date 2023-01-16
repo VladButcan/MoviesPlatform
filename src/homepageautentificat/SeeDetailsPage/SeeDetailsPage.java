@@ -13,7 +13,8 @@ import homepageautentificat.MoviesPage.FilterMovies;
 import homepageneautentificat.HomePageNeautentificat;
 import homepageautentificat.MoviesPage.MoviesPage;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class SeeDetailsPage implements CurrentPage {
@@ -28,9 +29,12 @@ public final class SeeDetailsPage implements CurrentPage {
             case "movies":
                 FilterMovies filterMovies = new FilterMovies();
                 filterMovies.setCurrentMoviesList(moviesList);
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.moviesList(moviesList);
-                jsonOut.createNode(output, moviesNode, userNode);
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.moviesList(moviesList))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 return new MoviesPage();
             case "upgrades":
                 return new UpgradesPage();
@@ -67,7 +71,11 @@ public final class SeeDetailsPage implements CurrentPage {
                 subscribe.act(actionsNode, usersList, output);
                 return currentPage;
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return currentPage;
         }
         movieActions.act(actionsNode, usersList, moviesList, output);
@@ -88,18 +96,29 @@ public final class SeeDetailsPage implements CurrentPage {
             if (movie.getName().equals(actionsNode.getMovie())) {
                 if (movie.getCountriesBanned().contains(
                         jsonOut.getCurrentUser().getCredentials().getCountry())) {
-                    jsonOut.errorNode(output);
+                    jsonOut = new JsonOut.Builder()
+                            .error("Error")
+                            .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                            .userNode(null).build();
+                    jsonOut.createOutputNode(output);
                     return new MoviesPage();
                 } else {
                     movies.setCurrentMovie(movie);
-                    ObjectNode userNode = jsonOut.createUserNode();
-                    ArrayNode moviesNode = jsonOut.createMovieNode(movie);
-                    jsonOut.createNode(output, moviesNode, userNode);
+                    jsonOut = new JsonOut.Builder()
+                            .error(null)
+                            .moviesNode(jsonOut.createMovieNode(movie))
+                            .userNode(jsonOut.createUserNode())
+                            .build();
+                    jsonOut.createOutputNode(output);
                     return new SeeDetailsPage();
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return new MoviesPage();
     }
 }

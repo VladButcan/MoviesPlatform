@@ -1,10 +1,11 @@
 package homepageautentificat.SeeDetailsPage;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import homepageautentificat.MoviesPage.Movies;
 import json.Actions.Actions;
 import json.JsonOut;
 import json.Users.Users;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class PremiumAccount implements AccountType {
@@ -27,14 +28,21 @@ public final class PremiumAccount implements AccountType {
                         user.getCredentials().setTokensCount(
                                 jsonOut.getCurrentUser().getCredentials().getTokensCount());
                     } else {
-                        jsonOut.errorNode(output);
+                        jsonOut = new JsonOut.Builder()
+                                .error("Error")
+                                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                                .userNode(null).build();
+                        jsonOut.createOutputNode(output);
                         return false;
                     }
                 }
                 user.getCredentials().setPurchasedMovies(currentMovie);
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.createMovieNode(currentMovie);
-                jsonOut.createNode(output, moviesNode, userNode);
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.createMovieNode(currentMovie))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 return true;
             }
         }

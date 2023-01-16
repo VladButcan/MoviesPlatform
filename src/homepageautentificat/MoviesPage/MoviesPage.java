@@ -8,7 +8,8 @@ import homepageautentificat.HomePageAutentificat;
 import homepageneautentificat.HomePageNeautentificat;
 import json.JsonOut;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class MoviesPage implements CurrentPage {
@@ -38,13 +39,20 @@ public final class MoviesPage implements CurrentPage {
                 logout.act();
                 return new HomePageNeautentificat();
             case "movies":
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.moviesList(moviesList))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 filterMovies.setCurrentMoviesList(moviesList);
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.moviesList(moviesList);
-                jsonOut.createNode(output, moviesNode, userNode);
                 return new MoviesPage();
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return currentPage;
         }
     }
@@ -71,7 +79,11 @@ public final class MoviesPage implements CurrentPage {
                 feature = new FilterMovies();
                 break;
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return new MoviesPage();
         }
         feature.act(actionsNode, usersList, moviesList, output);
@@ -82,8 +94,11 @@ public final class MoviesPage implements CurrentPage {
     public void goBack(final CurrentPage currentPage, final List<Movies> moviesList,
                        final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
-        ObjectNode userNode = jsonOut.createUserNode();
-        ArrayNode moviesNode = jsonOut.moviesList(moviesList);
-        jsonOut.createNode(output, moviesNode, userNode);
+        jsonOut = new JsonOut.Builder()
+                .error(null)
+                .moviesNode(jsonOut.moviesList(moviesList))
+                .userNode(jsonOut.createUserNode())
+                .build();
+        jsonOut.createOutputNode(output);
     }
 }

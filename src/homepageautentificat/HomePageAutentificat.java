@@ -10,7 +10,8 @@ import homepageneautentificat.HomePageNeautentificat;
 import json.Actions.Actions;
 import json.Users.Users;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class HomePageAutentificat implements CurrentPage {
@@ -29,9 +30,12 @@ public final class HomePageAutentificat implements CurrentPage {
         JsonOut jsonOut = new JsonOut();
         switch (actionsNode.getPage()) {
             case "movies":
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.moviesList(moviesList);
-                jsonOut.createNode(output, moviesNode, userNode);
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.moviesList(moviesList))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 return new MoviesPage();
             case "upgrades":
                 return new UpgradesPage();
@@ -40,7 +44,11 @@ public final class HomePageAutentificat implements CurrentPage {
                 logout.act();
                 return new HomePageNeautentificat();
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return currentPage;
         }
     }
@@ -57,7 +65,11 @@ public final class HomePageAutentificat implements CurrentPage {
                               final  List<Users> usersList, final List<Movies> moviesList,
                               final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return currentPage;
     }
 }

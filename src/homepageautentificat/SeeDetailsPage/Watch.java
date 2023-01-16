@@ -6,7 +6,8 @@ import homepageautentificat.MoviesPage.Movies;
 import json.Actions.Actions;
 import json.Users.Users;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Watch implements MovieActions {
@@ -28,20 +29,28 @@ public final class Watch implements MovieActions {
                     .contains(movies.showCurrentMovie())) {
                 if (!jsonOut.getCurrentUser().getCredentials().getWatchedMovies()
                         .contains(movies.showCurrentMovie())) {
+                    JsonOut finalJsonOut = jsonOut;
                     usersList.forEach(user -> {
                         if (user.getCredentials().getName()
-                                .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
+                                .equals(finalJsonOut.getCurrentUser().getCredentials().getName())) {
                             user.getCredentials().setWatchedMovies(movies.showCurrentMovie());
                         }
                     });
                 }
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.createMovieNode(movies.showCurrentMovie());
-                jsonOut.createNode(output, moviesNode, userNode);
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.createMovieNode(movies.showCurrentMovie()))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 return true;
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

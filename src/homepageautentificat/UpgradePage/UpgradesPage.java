@@ -9,7 +9,8 @@ import homepageautentificat.HomePageAutentificat;
 import homepageneautentificat.HomePageNeautentificat;
 import json.JsonOut;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 public final class UpgradesPage implements CurrentPage {
     @Override
@@ -21,9 +22,12 @@ public final class UpgradesPage implements CurrentPage {
             case "homepage autentificat":
                 return new HomePageAutentificat();
             case "movies":
-                ObjectNode userNode = jsonOut.createUserNode();
-                ArrayNode moviesNode = jsonOut.moviesList(moviesList);
-                jsonOut.createNode(output, moviesNode, userNode);
+                jsonOut = new JsonOut.Builder()
+                        .error(null)
+                        .moviesNode(jsonOut.moviesList(moviesList))
+                        .userNode(jsonOut.createUserNode())
+                        .build();
+                jsonOut.createOutputNode(output);
                 return new MoviesPage();
             case "logout":
                 Logout logout = new Logout();
@@ -47,7 +51,11 @@ public final class UpgradesPage implements CurrentPage {
                 buyAction = new BuyAccount();
                 break;
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return currentPage;
         }
         buyAction.buy(actionsNode, usersList, moviesList, output);

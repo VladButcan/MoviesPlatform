@@ -6,7 +6,8 @@ import json.Users.Users;
 import homepageautentificat.MoviesPage.MovieActions;
 import homepageautentificat.MoviesPage.Movies;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,11 @@ public final class Rate implements MovieActions {
                        final ArrayNode output) {
         JsonOut jsonOut = new JsonOut();
         if (actionsNode.getRate() > maxRate || actionsNode.getRate() < 0) {
-            jsonOut.errorNode(output);
+            jsonOut = new JsonOut.Builder()
+                    .error("Error")
+                    .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                    .userNode(null).build();
+            jsonOut.createOutputNode(output);
             return false;
         }
         Movies movies = new Movies();
@@ -27,9 +32,10 @@ public final class Rate implements MovieActions {
                 if (jsonOut.getCurrentUser().getCredentials().getWatchedMovies().contains(movie)) {
                     if (!jsonOut.getCurrentUser().getCredentials().getRatedMovies()
                             .contains(movie)) {
+                        JsonOut finalJsonOut = jsonOut;
                         usersList.forEach(user -> {
-                            if (user.getCredentials().getName()
-                                    .equals(jsonOut.getCurrentUser().getCredentials().getName())) {
+                            if (user.getCredentials().getName().equals(
+                                    finalJsonOut.getCurrentUser().getCredentials().getName())) {
                                 user.getCredentials().setRatedMovies(movie);
                             }
 
@@ -59,14 +65,21 @@ public final class Rate implements MovieActions {
                     }
                     movie.setRating(
                             newRate / movie.getNumRatings());
-                    ObjectNode userNode = jsonOut.createUserNode();
-                    ArrayNode moviesNode = jsonOut.createMovieNode(movie);
-                    jsonOut.createNode(output, moviesNode, userNode);
+                    jsonOut = new JsonOut.Builder()
+                            .error(null)
+                            .moviesNode(jsonOut.createMovieNode(movie))
+                            .userNode(jsonOut.createUserNode())
+                            .build();
+                    jsonOut.createOutputNode(output);
                     return true;
                 }
             }
         }
-        jsonOut.errorNode(output);
+        jsonOut = new JsonOut.Builder()
+                .error("Error")
+                .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                .userNode(null).build();
+        jsonOut.createOutputNode(output);
         return false;
     }
 }

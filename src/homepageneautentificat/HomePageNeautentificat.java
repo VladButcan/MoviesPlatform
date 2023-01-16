@@ -8,6 +8,8 @@ import homepageautentificat.MoviesPage.Movies;
 import homepageneautentificat.RegisterPage.RegisterPage;
 import homepageneautentificat.LoginPage.LoginPage;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public final class HomePageNeautentificat implements CurrentPage {
@@ -22,7 +24,11 @@ public final class HomePageNeautentificat implements CurrentPage {
             case "login":
                 return new LoginPage();
             default:
-                jsonOut.errorNode(output);
+                jsonOut = new JsonOut.Builder()
+                        .error("Error")
+                        .moviesNode(jsonOut.moviesList(new ArrayList<>()))
+                        .userNode(null).build();
+                jsonOut.createOutputNode(output);
                 return currentPage;
         }
     }
