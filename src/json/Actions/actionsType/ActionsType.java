@@ -1,6 +1,12 @@
-package json.Actions;
+package json.Actions.actionsType;
+
+import json.Actions.Actions;
 
 public final class ActionsType {
+    /**
+     * Function for return class that implements TypeOfActions
+     * @param actions actions node from json input
+     */
     public TypeOfActions returnType(final Actions actions) {
         switch (actions.getType()) {
             case "change page":

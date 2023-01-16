@@ -1,10 +1,11 @@
-package json.Actions;
+package json.Actions.actionsType;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import currentpageinterface.CurrentPage;
 import homepageautentificat.HomePageAutentificat;
 import homepageautentificat.MoviesPage.Movies;
 import homepageneautentificat.HomePageNeautentificat;
+import json.Actions.Actions;
 import json.JsonOut;
 import json.Users.Users;
 

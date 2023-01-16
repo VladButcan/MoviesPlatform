@@ -1,8 +1,11 @@
-package json.Actions;
+package json.Actions.actionsType;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import currentpageinterface.CurrentPage;
 import homepageautentificat.MoviesPage.Movies;
+import json.Actions.Actions;
+import json.Actions.AddedMovie;
+import json.Actions.DeleteMovie;
 import json.Json;
 import json.Users.Users;
 
