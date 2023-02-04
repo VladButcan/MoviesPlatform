@@ -66,7 +66,8 @@ and create for this HashMap for save gen and like that user give for
 movies that contain this genre.
     After this site sorting moviesArrayList decreasing by number 
 of likes and check if user don't watch the best movie and this movie 
-genre that user like. When it find best movie, site notify user about this and set on notifications movie name and message "recomendation".
+genre that user like. When it find best movie, site notify user about
+this and set on notifications movie name and message "recomendation".
 
     For create a jsonOut file Class JsonOut save current user that 
 access site and use builder pattern for create node with parametres 
